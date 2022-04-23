@@ -6,7 +6,7 @@ import random, json, time, os
 import plotly
 import plotly.graph_objects as go
 import plotly.express as px
-from dash import Dash, dcc, html
+from dash import dash, dcc, html
 from dash.dependencies import Input
 
 
@@ -24,18 +24,18 @@ app.config.suppress_callback_exceptions = True
 ###################
 #  Make Basic Plot  #
 #####################
-def Makeplot():
 
-    AbyCountry=pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
+AbyCountry=pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 
-    df=AbyCountry.iloc[:,0:6]
+df=AbyCountry.iloc[:,0:6]
 
-    df.rename(columns={"Total alcohol consumption per capita (liters of pure alcohol, projected estimates, 15+ years of age)": "AlcoholConsumption per Capita"}, inplace=True)
+df.rename(columns={"Total alcohol consumption per capita (liters of pure alcohol, projected estimates, 15+ years of age)": "AlcoholConsumption per Capita"}, inplace=True)
 
+df = df[df["Year"] > 1999]
+df.dropna(subset=["Entity", "GDP per capita, PPP (constant 2017 international $)"], inplace=True)
+df = df.sort_values(by=['Year'], ascending=True)
+def Makeplot(df):
 
-    df = df[df["Year"] > 1999]
-    df.dropna(subset=["Entity", "GDP per capita, PPP (constant 2017 international $)"], inplace=True)
-    df = df.sort_values(by=['Year'], ascending=True)
 
     data_slider = []
     years = df["Year"].unique()
@@ -79,7 +79,7 @@ def Makeplot():
     
 
     fig = dict(data=data_slider, layout=layout)
-    return plotly.offline.iplot(fig)
+    return go.Figure(fig)
     
     
 #################################################
@@ -99,7 +99,7 @@ app.layout = html.Div([
      
     dcc.Graph(
         id='Alcohol', 
-        figure = Makeplot()
+        figure = Makeplot(df)
     )
 
 ])  
