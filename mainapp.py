@@ -67,7 +67,16 @@ def Makeplot():
 
     layout = dict(title ='Alcohol Consumption Per Capita', geo=dict(scope='world',
                            projection={'type': 'natural earth'}), autosize=False, width=1000,
-                  height = 600, sliders=sliders)
+                  height = 600, sliders=sliders,annotations = [dict(
+        x=0.55,
+        y=0.1,
+        xref='paper',
+        yref='paper',
+        text='Source: <a href=https://www.kaggle.com/datasets/pralabhpoudel/alcohol-consumption-by-country">\
+            Kaggle</a>',
+        showarrow = False
+    )])
+    
 
     fig = dict(data=data_slider, layout=layout)
     return plotly.offline.iplot(fig)
