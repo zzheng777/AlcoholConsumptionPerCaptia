@@ -44,7 +44,7 @@ app.layout = html.Div([
         id='radio_items',
         options=[
                  {'label': 'AlcoholConsumption', 'value': 'AlcoholConsumption'},
-                 {'label': 'GDP', 'value': 'GDP'},
+                 {'label': 'GDP Per Capita', 'value': 'GDP'},
                  {'label': 'Population', 'value': 'Population'}
         ],
         value='AlcoholConsumption',
