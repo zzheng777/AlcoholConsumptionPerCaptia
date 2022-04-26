@@ -7,7 +7,7 @@ import plotly
 import plotly.graph_objects as go
 import plotly.express as px
 from dash import dash, dcc, html
-from dash.dependencies import Input
+from dash.dependencies import Input, Output
 
 
 # Add basic CSS
@@ -32,10 +32,10 @@ df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 #################################################
 
 app.layout = html.Div([
-    html.H1(children='Alcohol Consumption per Capita by Year'),
-    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia .'),
+    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
+    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population .'),
     
-    html.H6("Use the slider below to change the figure:"),
+    html.H6("Use the slider below to change the figures:"),
     html.Div([
     html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
     dcc.RadioItems(
