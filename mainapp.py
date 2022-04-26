@@ -3,6 +3,7 @@ import numpy as np, pandas as pd
 import random, json, time, os
 import warnings
 warnings.filterwarnings('ignore')
+
 # Required Modules
 import plotly
 import plotly.graph_objects as go
@@ -26,18 +27,17 @@ app.config.suppress_callback_exceptions = True
 #  Make Basic Plot  #
 #####################
 df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
+
+    
 #################################################
 ################# Layout ########################
 #################################################
 
 app.layout = html.Div([
     html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
-<<<<<<< HEAD
     html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
-=======
-    html.H2(children='This is an interactive map which shosw Alcohol Consumption per Captia, GDP per Capita and Population .'),
->>>>>>> d8855172ac5b8a494c29c56a0aa594eaff822ed6
     
+    html.H6("Use the slider below to change the figures:"),
     html.Div([
     html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
     dcc.RadioItems(
