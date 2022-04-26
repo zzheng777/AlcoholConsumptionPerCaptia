@@ -7,7 +7,7 @@ import plotly
 import plotly.graph_objects as go
 import plotly.express as px
 from dash import dash, dcc, html
-from dash.dependencies import Input
+from dash.dependencies import Input, Output
 
 
 # Add basic CSS
@@ -24,18 +24,48 @@ app.config.suppress_callback_exceptions = True
 ###################
 #  Make Basic Plot  #
 #####################
+df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 
-AbyCountry=pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
+    
+#################################################
+################# Layout ########################
+#################################################
 
-df=AbyCountry.iloc[:,0:6]
+app.layout = html.Div([
+    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
+    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population .'),
+    
+    html.H6("Use the slider below to change the figures:"),
+    html.Div([
+    html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
+    dcc.RadioItems(
+        id='radio_items',
+        options=[
+                 {'label': 'AlcoholConsumption', 'value': 'AlcoholConsumption'},
+                 {'label': 'GDP', 'value': 'GDP'},
+                 {'label': 'Population', 'value': 'Population'}
+        ],
+        value='AlcoholConsumption',
+        style={"text-align": "right","width": "60%"}
+    ),
+    ]),
+    
+    html.Br(),
+    dcc.Graph(id='Alcohol')
 
-df.rename(columns={"Total alcohol consumption per capita (liters of pure alcohol, projected estimates, 15+ years of age)": "AlcoholConsumption per Capita"}, inplace=True)
+])  
+## HI ME YO
+@app.callback(
+    Output('Alcohol', 'figure'),
+    [Input('radio_items', 'value')])
+def Makeplot(radio_items, df=df):
+    df=pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
+    df=df.iloc[:,0:6]
+    df.rename(columns={"Total alcohol consumption per capita (liters of pure alcohol, projected estimates, 15+ years of age)": "AlcoholConsumption", "Population (historical estimates)": "Population", "GDP per capita, PPP (constant 2017 international $)": "GDP"}, inplace=True)
 
-df = df[df["Year"] > 1999]
-df.dropna(subset=["Entity", "GDP per capita, PPP (constant 2017 international $)"], inplace=True)
-df = df.sort_values(by=['Year'], ascending=True)
-def Makeplot(df):
-
+    df = df[df["Year"] > 1999]
+    df.dropna(subset=["Entity", radio_items], inplace=True)
+    df = df.sort_values(by=['Year'], ascending=True)
 
     data_slider = []
     years = df["Year"].unique()
@@ -48,10 +78,10 @@ def Makeplot(df):
         data_each_yr = dict(
                             type='choropleth',
                             locations = df_segmented['Entity'],
-                            z=df_segmented['GDP per capita, PPP (constant 2017 international $)'].astype(float),
+                            z=df_segmented[radio_items].astype(float),
                             locationmode='country names',
                             colorscale = 'inferno_r',
-                            colorbar= {'title':'AlcoholConsumption per Capita'})
+                            colorbar= {'title':radio_items})
 
         data_slider.append(data_each_yr)
 
@@ -65,7 +95,7 @@ def Makeplot(df):
 
     sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
 
-    layout = dict(title ='Alcohol Consumption Per Capita', geo=dict(scope='world',
+    layout = dict(title = radio_items + ' Per Capita', geo=dict(scope='world',
                            projection={'type': 'natural earth'}), autosize=False, width=1000,
                   height = 600, sliders=sliders,annotations = [dict(
         x=0.55,
@@ -81,28 +111,6 @@ def Makeplot(df):
     fig = dict(data=data_slider, layout=layout)
     return go.Figure(fig)
     
-    
-#################################################
-################# Layout ########################
-#################################################
-
-app.layout = html.Div([
-
-    
-    html.H1(children='Alcohol Consumption per Capita by Year'),
-    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia .'),
-    
-    html.H6("Use the slider below to change the figure:"),
-
-    
-    html.Br(),
-     
-    dcc.Graph(
-        id='Alcohol', 
-        figure = Makeplot(df)
-    )
-
-])  
 
 
     # -------------------------- MAIN ---------------------------- #

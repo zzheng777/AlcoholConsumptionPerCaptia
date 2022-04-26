@@ -46,7 +46,7 @@ app.layout = html.Div([
                  {'label': 'Population', 'value': 'Population'}
         ],
         value='AlcoholConsumption',
-        style={"width": "60%"}
+        style={"text-align": "right","width": "60%"}
     ),
     ]),
     
@@ -54,7 +54,7 @@ app.layout = html.Div([
     dcc.Graph(id='Alcohol')
 
 ])  
-
+## HI ME YO
 @app.callback(
     Output('Alcohol', 'figure'),
     [Input('radio_items', 'value')])
