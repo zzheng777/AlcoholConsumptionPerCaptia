@@ -33,7 +33,7 @@ df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 
 app.layout = html.Div([
     html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
-    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population .'),
+    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
     
     html.H6("Use the slider below to change the figures:"),
     html.Div([
@@ -46,15 +46,15 @@ app.layout = html.Div([
                  {'label': 'Population', 'value': 'Population'}
         ],
         value='AlcoholConsumption',
-        style={"text-align": "right","width": "60%"}
+        style={"width": "60%"}
     ),
     ]),
     
     html.Br(),
-    dcc.Graph(id='Alcohol')
-
+    dcc.Graph(id='Alcohol'),
+    
 ])  
-## HI ME YO
+
 @app.callback(
     Output('Alcohol', 'figure'),
     [Input('radio_items', 'value')])
@@ -96,7 +96,7 @@ def Makeplot(radio_items, df=df):
     sliders = [dict(active=0, pad={"t": 1}, steps=steps)]
 
     layout = dict(title = radio_items + ' Per Capita', geo=dict(scope='world',
-                           projection={'type': 'natural earth'}), autosize=False, width=1000,
+                           projection={'type': 'natural earth'}), autosize=False, width=1500,
                   height = 600, sliders=sliders,annotations = [dict(
         x=0.55,
         y=0.1,
@@ -120,3 +120,5 @@ def Makeplot(radio_items, df=df):
 # The port number can be changed to fit your particular needs
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=False)
+
+
