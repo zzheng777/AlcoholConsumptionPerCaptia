@@ -53,7 +53,7 @@ app.layout = html.Div([
     html.H6("Use the slider below to change the figures:"),
     html.Br(),
     dcc.Graph(id='Alcohol'),
-    html.Small(children="This data orginated from Kaggle who pulled the data from Our World in Data, the data set we used has 5 variables; Entity which is the country,Year, Alcohol Comsuption per captia which is the average per capita alcohol consumption – in litres of pure alcohol per year, Gross Domestic Product per captia (GDP per Capita), population of each country. The graph above show the progression of three variables, alcohol consumption per capita, Gross Domesnpic Product per capita and population of majority of all countries from the year 2000 to year 2018.", style={"text-align":"center",'display': 'inline-block'}),
+    html.Small(children="This data orginated from Kaggle who pulled the data from Our World in Data, the data set we used has 5 variables; Entity which is the country,Year, Alcohol Comsuption per captia which is the average per capita alcohol consumption – in litres of pure alcohol per year, Gross Domestic Product per captia (GDP per Capita), population of each country. The graph above show the progression of three variables, alcohol consumption per capita, Gross Domestic Product per capita and population of majority of all countries from the year 2000 to year 2018.", style={"text-align":"center",'display': 'inline-block'}),
 ]) 
     
 
