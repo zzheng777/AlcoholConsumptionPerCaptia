@@ -34,8 +34,9 @@ df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 #################################################
 
 app.layout = html.Div([
-    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
-    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
+    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold", "backgroundcolor":"black"}),
+    html.H2(className="top_metrics",children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
+    html.H7(children="Made by Shashwat Rajkarnikar and Andy Zheng", style={"text-align":"right"}),
     html.Div([
     html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
     dcc.RadioItems(
@@ -49,7 +50,7 @@ app.layout = html.Div([
         style={"width": "60%"}
     ),
     ]),
-    html.H6("Use the slider below to change the figures:"),
+    html.H6("Use the slider below see the changes over the years:"),
     html.Br(),
     dcc.Graph(id='Alcohol'),
     
@@ -120,6 +121,8 @@ def Makeplot(radio_items, df=df):
 # The port number can be changed to fit your particular needs
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=False)
+
+
 
 
 
