@@ -34,12 +34,12 @@ df = pd.read_csv("alcohol-consumption-vs-gdp-per-capita.csv")
 #################################################
 
 app.layout = html.Div([
-    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold", "backgroundcolor":"black"}),
-    html.H2(className="top_metrics",children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
-    html.H7(children="Made by Shashwat Rajkarnikar and Andy Zheng", style={"text-align":"right"}),
+    html.H1(children='Changes in the World by Year', style={"text-align": "center", "font-weight": "bold"}),
+    html.H2(children='This is an interactive map which show Alcohol Consumption per Captia, GDP per Capita and Population',style={"text-align": "center"}),
+    html.H6(children="Made by Shashwat Rajkarnikar and Andy Zheng", style={"text-align":"right"}),
     html.Div([
-    html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
-    dcc.RadioItems(
+        html.Label(['Choose a graph:'],style={'font-weight': 'bold'}),
+        dcc.RadioItems(
         id='radio_items',
         options=[
                  {'label': 'AlcoholConsumption', 'value': 'AlcoholConsumption'},
@@ -50,11 +50,12 @@ app.layout = html.Div([
         style={"width": "60%"}
     ),
     ]),
-    html.H6("Use the slider below see the changes over the years:"),
+    html.H6("Use the slider below to change the figures:"),
     html.Br(),
     dcc.Graph(id='Alcohol'),
+    html.Small(children="This data orginated from Kaggle who pulled the data from Our World in Data, the data set we used has 5 variables; Entity which is the country,Year, Alcohol Comsuption per captia which is the average per capita alcohol consumption – in litres of pure alcohol per year, Gross Domestic Product per captia (GDP per Capita), population of each country.", style={"text-align":"center",'display': 'inline-block'}),
+]) 
     
-])  
 
 @app.callback(
     Output('Alcohol', 'figure'),
@@ -121,8 +122,6 @@ def Makeplot(radio_items, df=df):
 # The port number can be changed to fit your particular needs
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=False)
-
-
 
 
 
